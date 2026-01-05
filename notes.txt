@@ -1,0 +1,18 @@
+
+MONKY MAKER ENGAGEMENT FARMING - TECHNICAL NOTES
+=================================================
+
+ADMIN: HOW TO DOWNLOAD RESULTS
+------------------------------
+1. Click the 'Start' button in the bottom left corner.
+2. Select 'EXPORT_LEDGER.BAT' or open 'JUNGLE_NET.SYS'.
+3. Click the green 'DOWNLOAD_REPORT.CSV' button.
+4. The .csv file will download automatically. You can open it directly in Microsoft Excel or Google Sheets to view the list of X Usernames, Wallets, and Evidence Links in a clean table.
+
+DATA PRIVACY:
+- Geolocation: FULLY REMOVED.
+- User Identity: Nodes are identified by fictional signatures.
+- Data Storage: LocalStorage is used for current session persistence.
+
+PRODUCTION TIPS:
+If you want this campaign to automatically send data to your server (without manual download), connect the `nextStep` function in App.tsx to a Google Sheets API or a database like Supabase.

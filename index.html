@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MONKY MAKER - v99.0.0 - JUNGLE OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&family=Impact&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --win-bg: #c0c0c0;
+            --win-white: #ffffff;
+            --win-light: #dfdfdf;
+            --win-shadow: #808080;
+            --win-black: #000000;
+            --neon-green: #39ff14;
+            --neon-pink: #ff00ff;
+            --jungle-deep: #0a041a;
+        }
+
+        * {
+          -webkit-tap-highlight-color: transparent;
+          box-sizing: border-box;
+          scrollbar-width: none;
+        }
+        *::-webkit-scrollbar { display: none; }
+
+        body {
+            background-color: var(--jungle-deep);
+            background-image: 
+                radial-gradient(circle, rgba(57, 255, 20, 0.08) 1px, transparent 0),
+                linear-gradient(rgba(0,0,0,0.6) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.6) 1px, transparent 1px);
+            background-size: 20px 20px, 40px 40px, 40px 40px;
+            cursor: default;
+            overflow: hidden;
+            height: 100vh;
+            font-family: 'Tahoma', sans-serif;
+            color: var(--win-black);
+            margin: 0;
+            padding: 0;
+            position: fixed;
+            width: 100vw;
+        }
+
+        .win95-window {
+            background-color: var(--win-bg);
+            border-top: 3px solid var(--win-white);
+            border-left: 3px solid var(--win-white);
+            border-right: 3px solid var(--win-black);
+            border-bottom: 3px solid var(--win-black);
+            box-shadow: inset 1px 1px 0px 1px var(--win-light), inset -1px -1px 0px 1px var(--win-shadow);
+            padding: 2px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        .win95-title-bar {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            padding: 2px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 11px;
+            height: 24px;
+            flex-shrink: 0;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
+            user-select: none;
+        }
+
+        .win95-content {
+            padding: 0px;
+            background: var(--win-bg);
+            overflow: hidden;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .meme-font {
+            font-family: 'Impact', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--neon-pink);
+            -webkit-text-stroke: 1.5px #000;
+            text-shadow: 3px 3px 0px #000;
+            letter-spacing: -0.01em;
+        }
+
+        .crt::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.12) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+            z-index: 100;
+            background-size: 100% 4px, 4px 100%;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .win95-btn {
+            background-color: var(--win-bg);
+            border-top: 2px solid var(--win-white);
+            border-left: 2px solid var(--win-white);
+            border-right: 2px solid var(--win-black);
+            border-bottom: 2px solid var(--win-black);
+            padding: 6px 12px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.1s;
+        }
+
+        .win95-btn:active:not(:disabled) {
+            border-top: 2px solid var(--win-black);
+            border-left: 2px solid var(--win-black);
+            border-right: 2px solid var(--win-white);
+            border-bottom: 2px solid var(--win-white);
+            padding-top: 8px;
+            padding-left: 14px;
+            background-color: var(--win-light);
+        }
+
+        .win95-btn:disabled {
+            color: var(--win-shadow);
+            cursor: not-allowed;
+        }
+
+        .win95-input {
+            background: white;
+            border-top: 2px solid var(--win-shadow);
+            border-left: 2px solid var(--win-shadow);
+            border-right: 2px solid var(--win-white);
+            border-bottom: 2px solid var(--win-white);
+            padding: 10px;
+            outline: none;
+            color: black;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .taskbar {
+            background: var(--win-bg);
+            border-top: 2px solid var(--win-white);
+            height: 34px;
+            display: flex;
+            align-items: center;
+            padding: 2px 6px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 500;
+        }
+
+        @keyframes banana-fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .falling-banana {
+            position: fixed;
+            z-index: 1;
+            animation: banana-fall linear infinite;
+            pointer-events: none;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 0, 0.3));
+        }
+
+        .loading-spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #000;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .win95-inset-panel {
+            background: var(--win-white);
+            border-top: 2px solid var(--win-shadow);
+            border-left: 2px solid var(--win-shadow);
+            border-right: 2px solid var(--win-white);
+            border-bottom: 2px solid var(--win-white);
+            padding: 8px;
+        }
+
+        @media (max-width: 640px) {
+          .win95-window { border: 2px solid black; }
+          .taskbar { height: 40px; }
+          .meme-font { font-size: 1.75rem; }
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.2.3",
+    "react/": "https://esm.sh/react@19.2.3/",
+    "react-dom": "https://esm.sh/react-dom@19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@19.2.3/",
+    "react-dom/client": "https://esm.sh/react-dom@19.2.3/client"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="flex items-center justify-center overflow-hidden">
+    <div id="root" class="w-full h-full flex items-center justify-center"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
