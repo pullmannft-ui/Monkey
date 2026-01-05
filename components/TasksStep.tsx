@@ -75,7 +75,7 @@ export const TasksStep: React.FC<TasksStepProps> = ({ data, setData, isSubmittin
                 <span className="text-[9px] font-black text-black uppercase">PINNED_RAID_TARGET</span>
              </div>
              <button 
-                onClick={() => handleAction(2, 'https://x.com/monkymakerETH/status/1885621404111303036', 'liked')}
+                onClick={() => handleAction(2, 'https://x.com/monkymakereth/status/2008204715579118052?s=46', 'liked')}
                 className={`win95-btn w-full !py-2 !text-md !font-black uppercase border-2 border-black transition-all gap-2 ${data.tasks.liked ? '!bg-green-100' : '!bg-[#39ff14] active:scale-95'}`}
              >
                 {activeTask === 2 && <div className="loading-spinner"></div>}
